@@ -1,129 +1,132 @@
 ﻿using System;
-//Este programa crea una matriz con los parametros que ingrese el usurio y permite modificar cada uno de ellos.
-//Por Kemil Beltre.
-namespace matrizsolucion
+/*
+ * This program allows to create a matrix
+ * with the parameters that the user enters 
+ * and to modify each of them.
+ * 
+ * @autor Kemil Beltre
+ */
+
+namespace SolutionMatrix
 {
     class Program
     {
         static void Main(string[] args)
         {
-            //Hago el llamado al metodo que tiene las opciones principales del programa.
-            menumatriz();
+            menuMatrix();
             Console.ReadKey(true);
         }
 
-        private static void indicematriz(out int tamfilas, out int tamcol, out int [,] matrizus)
+        private static void indexMatrix(out int sizeRows, out int sizeCol, out int [,] matrix)
         {
-            //por esta parte el programa pide las dimenciones de la matriz.
-            Console.WriteLine("¿Cuantas filas tendra la matriz?");
-            tamfilas = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("How many rows will the matrix have?");
+            sizeRows = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("¿Cuantas columnas tendra la matriz?");
-            tamcol = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("How many columns will the matrix have?");
+            sizeCol = Convert.ToInt32(Console.ReadLine());
             
-             matrizus = new int[tamfilas,tamcol];
-            //creo un ciclo for por el cual permitira al usuario rellenar la matriz.
-            for (int indicefilas = 0; indicefilas < tamfilas; indicefilas++)
+             matrix = new int[sizeRows,sizeCol];
+
+            for (int indexRows = 0; indexRows < sizeRows; indexRows++)
             {
-                for (int indiceCol = 0; indiceCol < tamcol; indiceCol++)
+                for (int indexCol = 0; indexCol < sizeCol; indexCol++)
                 {
-                    Console.WriteLine("Ingrese el dato del índice [" + indicefilas + "," + indiceCol + "]:");
-                    matrizus[indicefilas, indiceCol] = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter the index data [" + indexRows + "," + indexCol + "]:");
+                    matrix[indexRows, indexCol] = Convert.ToInt32(Console.ReadLine());
                 }
             }
 
         }
 
-        private static void menumatriz() //este metodo permitira modificar cada parte de la matriz ingresada por el usurio. 
+        private static void menuMatrix() 
         {
-            int filaUsuario, colUsuario, elemento, reemplazo, contador, opcion;
-            bool encontrado;
-            indicematriz(out int tamfilas, out int tamcol, out int[,] matrizus);
+            int rowUser, colUser, element, replace, counter, option;
+            bool isFound;
+            indexMatrix(out int sizeRows, out int sizeCol, out int[,] matrix);
 
             do
             {
-                Console.WriteLine("1. Modificar un elemento por sus indices");
-                Console.WriteLine("2. Modificar un elemento por sus coincidencias");
-                Console.WriteLine("3. Mostrar los datos de la matriz");
-                Console.WriteLine("4. Salir");
-                Console.WriteLine("Elige una opción");
-                opcion = Convert.ToInt32(Console.ReadLine());
-                Console.Clear(); //limpiará la pantalla luego de elegir una opcón del menú.
+                Console.WriteLine("1. Modify an element by its indices");
+                Console.WriteLine("2. Modify an element by its matches");
+                Console.WriteLine("3. Show matrix data");
+                Console.WriteLine("4. Exit");
+                Console.WriteLine("Choose an option");
+                option = Convert.ToInt32(Console.ReadLine());
+                Console.Clear(); 
 
-                switch (opcion)
+                switch (option)
                 {
                     case 1:
-                        Console.WriteLine("Ingresa el índice de la fila: ");
-                        filaUsuario = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Enter the row index: ");
+                        rowUser = Convert.ToInt32(Console.ReadLine());
 
-                        Console.WriteLine("Ingresa el índice de la columna: ");
-                        colUsuario = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Enter the column index: ");
+                        colUser = Convert.ToInt32(Console.ReadLine());
 
-                        if (filaUsuario < tamfilas && colUsuario < tamcol)
+                        if (rowUser < sizeRows && colUser < sizeCol)
                         {
-                            Console.WriteLine("Ingresa el nuevo elemento del índice [" + filaUsuario + "," + colUsuario + "]: ");
-                            matrizus[filaUsuario, colUsuario] = Convert.ToInt32(Console.ReadLine()); //guardamos datos ingresados en la matriz.
+                            Console.WriteLine("Enter the new index element [" + rowUser + "," + colUser + "]: ");
+                            matrix[rowUser, colUser] = Convert.ToInt32(Console.ReadLine()); 
                         }
                         else
                         {
-                            Console.WriteLine("El índice [" + filaUsuario + "," + colUsuario + "] no existe.");
+                            Console.WriteLine("Index [" + rowUser + "," + colUser + "] no found.");
                         }
 
                         break;
 
                     case 2:
-                        contador = 0;
-                        encontrado = false; //al principio el contador inicia en falso ya que no se han pedido ninguna  modificacion.
-                        Console.WriteLine("Ingresar el número a reemplazar: ");
-                        elemento = Convert.ToInt32(Console.ReadLine());
+                        counter = 0;
+                        isFound = false; 
+                        Console.WriteLine("Enter the number to be replaced: ");
+                        element = Convert.ToInt32(Console.ReadLine());
 
-                        Console.WriteLine("Ingresar el número de reemplazo: ");
-                        reemplazo = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Enter replacement number: ");
+                        replace = Convert.ToInt32(Console.ReadLine());
 
-                        for (int indicefilas = 0; indicefilas < tamfilas; indicefilas++)
+                        for (int indexRows = 0; indexRows < sizeRows; indexRows++)
                         {
-                            for (int indiceCol = 0; indiceCol < tamcol; indiceCol++)
+                            for (int indexCol = 0; indexCol < sizeCol; indexCol++)
                             {
-                                if (matrizus[indicefilas, indiceCol] == elemento)
+                                if (matrix[indexRows, indexCol] == element)
                                 {
-                                    encontrado = true;
-                                    contador++;
-                                    matrizus[indicefilas, indiceCol] = reemplazo;
+                                    isFound = true;
+                                    counter++;
+                                    matrix[indexRows, indexCol] = replace;
                                 }
 
                             }
-                            if (encontrado == true)
+                            if (isFound == true)
                             {
-                                Console.WriteLine("Se encontraron " + contador + " coincidencias " + elemento + " y fueron reemplazados por " + reemplazo);
+                                Console.WriteLine("The following were found: " + counter + " matches: " + element + " and replaced by " + replace);
                             }
                             else
                             {
-                                Console.WriteLine("No se encontraron coincidencias con " + elemento);
+                                Console.WriteLine("Try again " + element);
                             }
                         }
                         break;
 
-                        //creamos un ciclo for para mostrar los datos de la matriz.
                     case 3:
-                        for (int indicefilas = 0; indicefilas < tamfilas; indicefilas++)
+                        for (int indexRows = 0; indexRows < sizeRows; indexRows++)
                         {
-                            for (int indiceCol = 0; indiceCol < tamcol; indiceCol++)
+                            for (int indexCol = 0; indexCol < sizeCol; indexCol++)
                             {
-                                Console.Write(" " + matrizus[indicefilas, indiceCol]);
+                                Console.Write(" " + matrix[indexRows, indexCol]);
                             }
                             Console.WriteLine();
                         }
 
                         break;
                     case 4:
-                        Console.WriteLine("Aplicación finalizada");
+                        Console.WriteLine("Goodbye");
                         break;
                     default:
-                        Console.WriteLine("OPCIÓN INCORRECTA"); //cuando se ingrese un número diferente al del menú de opciones, saltará este mensaje.
+                        Console.WriteLine("NOT FOUND");
                         break;
 
                 }
-            } while (opcion != 4);
+            } while (option != 4);
 
         }
 
